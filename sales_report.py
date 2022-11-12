@@ -1,25 +1,17 @@
 """Generate sales report showing total melons each salesperson sold."""
 
 
-salespeople = []
-melons_sold = []
+sales_report = {}
 
-f = open('sales-report.txt')
+file = open('sales-report.txt')
 
-for line in f:
+for line in file:
     line = line.rstrip()
     entries = line.split('|')
-    salesperson = entries[0]
-    melons = int(entries[2])
-
-    if salesperson in salespeople:
-        position = salespeople.index(salesperson)
-        melons_sold[position] += melons
-        
+    if entries[0] in sales_report:
+        sales_report[entries[0]] = sales_report[entries[0]] + int(entries[2])
     else:
-        salespeople.append(salesperson)
-        melons_sold.append(melons)
+        sales_report[entries[0]] = int(entries[2])
 
-
-for i in range(len(salespeople)):
-    print(f'{salespeople[i]} sold {melons_sold[i]} melons')
+for salesperson in sales_report.items():
+    print(f'{salesperson[0]} sold {salesperson[1]} melons.')
